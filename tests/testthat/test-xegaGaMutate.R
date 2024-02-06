@@ -40,7 +40,7 @@ test_that("MutateGene: g:  not evaluated, not mutated. OK",
 )
 
 test_that("MutateGene: g:  not evaluated, mutated. OK",
-  { 
+  { set.seed(3257)
    g<-xegaGaInitGene(lFxegaGaGene)
    lFxegaGaGene$BitMutationRate1<-parm(1.0)
    ng<-xegaGaMutateGene(g, lFxegaGaGene)
@@ -51,7 +51,7 @@ test_that("MutateGene: g:  not evaluated, mutated. OK",
 )
 
 test_that("MutateGene: g:  evaluated, mutated. OK",
-  {
+  {  set.seed(32057)
    g<-xegaGaInitGene(lFxegaGaGene)
    g<-EvalGene(g, lFxegaGaGene)
    lFxegaGaGene$BitMutationRate1<-parm(1.0)
@@ -63,7 +63,7 @@ test_that("MutateGene: g:  evaluated, mutated. OK",
 )
 
 test_that("MutateGene: g:  evaluated, not mutated. OK",
-  {
+  { 
    g<-xegaGaInitGene(lFxegaGaGene)
    g<-EvalGene(g, lFxegaGaGene)
    lFxegaGaGene$BitMutationRate1<-parm(0.0)
@@ -91,7 +91,7 @@ test_that("IVAdaptiveMutateGene: g: not eval, not mutated, low fit. OK",
 )
 
 test_that("IVAdaptiveMutateGene: g: not eval, mutated, low fit. OK",
-{ 
+{ set.seed(2833) 
    g<-xegaGaInitGene(lFxegaGaGene)
    lFxegaGaGene$BitMutationRate1<-parm(0.0)
    lFxegaGaGene$BitMutationRate2<-parm(1.0)
@@ -103,7 +103,7 @@ test_that("IVAdaptiveMutateGene: g: not eval, mutated, low fit. OK",
 )
 
 test_that("IVAdaptiveMutateGene: g: eval, mutated, low fit. OK",
-{ 
+{  set.seed(4013)
    g<-xegaGaInitGene(lFxegaGaGene)
    g<-EvalGene(g, lFxegaGaGene)
    lFxegaGaGene$BitMutationRate<-parm(0.0)
@@ -116,7 +116,7 @@ test_that("IVAdaptiveMutateGene: g: eval, mutated, low fit. OK",
 )
 
 test_that("IVAdaptiveMutateGene: g: eval, not mutated, low fit. OK",
-{ 
+{  
    g<-xegaGaInitGene(lFxegaGaGene)
    g<-EvalGene(g, lFxegaGaGene)
    lFxegaGaGene$BitMutationRate1<-parm(0.0)
@@ -130,7 +130,7 @@ test_that("IVAdaptiveMutateGene: g: eval, not mutated, low fit. OK",
 
 #### Problems! Not stable
 test_that("IVAdaptiveMutateGene: g: eval, not mutated, high fit. OK",
-{ 
+{ set.seed(5651)
    g<-xegaGaInitGene(lFxegaGaGene)
    g<-EvalGene(g, lFxegaGaGene)
    lFxegaGaGene$CutoffFit<-parm(0.000001)
@@ -145,7 +145,7 @@ test_that("IVAdaptiveMutateGene: g: eval, not mutated, high fit. OK",
 
 #### Problems! Not stable
 test_that("IVAdaptiveMutateGene: g: eval, mutated, high fit. OK",
-{ 
+{  set.seed(499)
    g<-xegaGaInitGene(lFxegaGaGene)
    g<-EvalGene(g, lFxegaGaGene)
    lFxegaGaGene$CutoffFit<-parm(0.000001)
@@ -163,7 +163,7 @@ test_that("IVAdaptiveMutateGene: g: eval, mutated, high fit. OK",
 #
 
 test_that("xegaGaMutationFactory() OK",
-{
+{  set.seed(29)
    g<-xegaGaInitGene(lFxegaGaGene)
    g<-EvalGene(g, lFxegaGaGene)
    lFxegaGaGene$BitMutationRate1<-parm(1.0)
@@ -176,7 +176,7 @@ test_that("xegaGaMutationFactory() OK",
 )
 
 test_that("xegaGaMutationFactory  MutateGene OK",
-{
+{  set.seed(84871)
    g<-xegaGaInitGene(lFxegaGaGene)
    g<-EvalGene(g, lFxegaGaGene)
    lFxegaGaGene$BitMutationRate1<-parm(1.0)
@@ -189,7 +189,7 @@ test_that("xegaGaMutationFactory  MutateGene OK",
 )
 
 test_that("xegaGaMutationFactory  IVM OK",
-{
+{  set.seed(2053)
    g<-xegaGaInitGene(lFxegaGaGene)
    g<-EvalGene(g, lFxegaGaGene)
    lFxegaGaGene$BitMutationRate1<-parm(1.0)

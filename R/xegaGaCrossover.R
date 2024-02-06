@@ -37,7 +37,7 @@
 xegaGaCross2Gene<-function(gg1, gg2, lF)
 {
     g1<-gg1$gene1; g2<-gg2$gene1
-    cut<-sample(1:length(g1), 1)
+    cut<-sample(1:max(1,(length(g1)-1)), 1)
     ng1<-gg1; ng2<-gg2
     ng1$gene1<-c(head(g1,cut), tail(g2, length(g2)-cut))
     # Tests on equality?
@@ -167,7 +167,7 @@ xegaGaUPCross2Gene<-function(gg1, gg2, lF)
 xegaGaCrossGene<-function(gg1, gg2, lF)
 {
     g1<-gg1$gene1; g2<-gg2$gene1
-    cut<-sample(1:length(g1), 1)
+    cut<-sample(1:max(1,(length(g1)-1)), 1)
     ng<-gg1
     ng$gene1<-c(head(g1,cut), tail(g2, length(g2)-cut))
     # Tests on equality?

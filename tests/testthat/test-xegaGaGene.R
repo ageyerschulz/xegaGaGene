@@ -25,7 +25,7 @@ test_that("lFxegaGaGene OK",
 )
 
 test_that("InitGene OK",
-          {
+          { set.seed(325709)
 	   g<-xegaGaInitGene(lFxegaGaGene)
 	   expect_identical(g$evaluated, FALSE)
 	   expect_identical(g$evalFail, FALSE)
