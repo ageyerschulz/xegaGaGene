@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------
+  xegaGaGene                                                       News
+-------------------------------------------------------------------------
+
+Version 1.0.0.1 (2024-02-07)
+
+- xegaGaCross2Gene: 
+- xegaGaCrossGene:
+       Upper limit of sampling interval for determining 
+       1-point crossover  decreased by 1.
+       Consequence: Genes must be mixed.
+
