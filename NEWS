@@ -10,3 +10,8 @@ Version 1.0.0.1 (2024-02-07)
        1-point crossover  decreased by 1.
        Consequence: Genes must be mixed.
 
+Version 1.0.0.1 (2024-02-20)
+
+- Multiple improvements of documentation fo functions.
+- Removed redundant unit tests.
+

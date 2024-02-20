@@ -8,7 +8,7 @@
 
 #' One point crossover of 2 genes.
 #'
-#' @description \code{xegaGaCross2Gene} randomly determines a cut point.
+#' @description \code{xegaGaCross2Gene()} randomly determines a cut point.
 #'              It combines the bits before the cut point of the first gene
 #'              with the bits after the cut point from the second gene (kid 1).
 #'              It combines the bits before the cut point of the second gene
@@ -21,7 +21,7 @@
 #'
 #' @return A list of 2 binary genes.
 #'
-#' @family Crossover (2)
+#' @family Crossover (Returns 2 Kids)
 #'
 #' @examples
 #' gene1<-xegaGaInitGene(lFxegaGaGene)
@@ -50,7 +50,7 @@ xegaGaCross2Gene<-function(gg1, gg2, lF)
 
 #' Uniform crossover of 2 genes.
 #'
-#' @description \code{xegaGaUCross2Gene} swaps alleles of both genes
+#' @description \code{xegaGaUCross2Gene()} swaps alleles of both genes
 #'              with a probability of 0.5. It generates a random 
 #'              mask which is used to build the new genes.
 #'              It returns 2 genes.
@@ -69,7 +69,7 @@ xegaGaCross2Gene<-function(gg1, gg2, lF)
 #'   Morgan Kaufmann Publishers, Los Altos, California, pp. 2-9.
 #'   (ISBN:1-55860-066-3)
 #'
-#' @family Crossover (2)
+#' @family Crossover (Returns 2 Kids)
 #'
 #' @examples
 #' gene1<-xegaGaInitGene(lFxegaGaGene)
@@ -95,8 +95,8 @@ xegaGaUCross2Gene<-function(gg1, gg2, lF)
 
 #' Parameterized uniform crossover of 2 genes.
 #'
-#' @description \code{xegaGaUP2CrossGene} swaps alleles of both genes
-#'              with a probability of \code{lF$UCrossSwap}. 
+#' @description \code{xegaGaUP2CrossGene()} swaps alleles of both genes
+#'              with a probability of \code{lF$UCrossSwap()}. 
 #'              It generates a random 
 #'              mask which is used to build the new gene.
 #'              It returns 2  genes.
@@ -114,7 +114,7 @@ xegaGaUCross2Gene<-function(gg1, gg2, lF)
 #'
 #' @return A list of 2 binary genes.
 #'
-#' @family Crossover (2)
+#' @family Crossover (Returns 2 Kids)
 #'
 #' @examples
 #' gene1<-xegaGaInitGene(lFxegaGaGene)
@@ -140,11 +140,9 @@ xegaGaUPCross2Gene<-function(gg1, gg2, lF)
 
 #' One point crossover of 2 genes.
 #'
-#' @description \code{xegaGaCrossGene} randomly determines a cut point.
+#' @description \code{xegaGaCrossGene()} randomly determines a cut point.
 #'              It combines the bits before the cut point of the first gene
 #'              with the bits after the cut point from the second gene (kid 1).
-#'              It combines the bits before the cut point of the second gene
-#'              with the bits after the cut point from the first gene (kid 2).
 #'
 #' @param gg1     A binary gene.
 #' @param gg2     A binary gene.
@@ -152,7 +150,7 @@ xegaGaUPCross2Gene<-function(gg1, gg2, lF)
 #'
 #' @return A list of one binary gene.
 #'
-#' @family Crossover (1)
+#' @family Crossover (Returns 1 Kid)
 #'
 #' @examples
 #' gene1<-xegaGaInitGene(lFxegaGaGene)
@@ -177,7 +175,7 @@ xegaGaCrossGene<-function(gg1, gg2, lF)
 
 #' Uniform crossover of 2 genes.
 #'
-#' @description \code{xegaGaUCrossGene} swaps alleles of both genes
+#' @description \code{xegaGaUCrossGene()} swaps alleles of both genes
 #'              with a probability of 0.5. It generates a random 
 #'              mask which is used to build the new gene.
 #'
@@ -195,7 +193,7 @@ xegaGaCrossGene<-function(gg1, gg2, lF)
 #'
 #' @return A list of one binary gene.
 #'
-#' @family Crossover (1)
+#' @family Crossover (Returns 1 Kid)
 #'
 #' @examples
 #' gene1<-xegaGaInitGene(lFxegaGaGene)
@@ -220,8 +218,8 @@ xegaGaUCrossGene<-function(gg1, gg2, lF)
 
 #' Parameterized uniform crossover of 2 genes.
 #'
-#' @description \code{xegaGaUPCrossGene} swaps alleles of both genes
-#'              with a probability of \code{lF$UCrossSwap}. 
+#' @description \code{xegaGaUPCrossGene()} swaps alleles of both genes
+#'              with a probability of \code{lF$UCrossSwap()}. 
 #'              It generates a random 
 #'              mask which is used to build the new gene.
 #'
@@ -239,7 +237,7 @@ xegaGaUCrossGene<-function(gg1, gg2, lF)
 #'
 #' @return A list of one binary gene.
 #'
-#' @family Crossover (1)
+#' @family Crossover (Returns 1 Kid)
 #'
 #' @examples
 #' gene1<-xegaGaInitGene(lFxegaGaGene)
@@ -264,7 +262,7 @@ xegaGaUPCrossGene<-function(gg1, gg2, lF)
 
 #' Configure the crossover function of a genetic algorithm.
 #'
-#' @description \code{xegaGaCrossoverFactory} implements the selection
+#' @description \code{xegaGaCrossoverFactory()} implements the selection
 #'              of one of the crossover functions in this
 #'              package by specifying a text string.
 #'              The selection fails ungracefully (produces
@@ -276,17 +274,22 @@ xegaGaUPCrossGene<-function(gg1, gg2, lF)
 #'              \enumerate{
 #'              \item Crossover functions with two kids:
 #'              \enumerate{
-#'              \item "Cross2Gene" returns \code{xegaGaCross2Gene}.
-#'              \item "UCross2Gene" returns \code{xegaGaUCross2Gene}.
-#'              \item "PUCross2Gene" returns \code{xegaGaUPCross2Gene}.
+#'              \item "Cross2Gene" returns \code{xegaGaCross2Gene()}.
+#'              \item "UCross2Gene" returns \code{xegaGaUCross2Gene()}.
+#'              \item "UPCross2Gene" returns \code{xegaGaUPCross2Gene()}.
 #'              }
 #'              \item Crossover functions with one kid:
 #'              \enumerate{
-#'              \item "CrossGene" returns \code{xegaGaCrossGene}.
-#'              \item "UCrossGene" returns \code{xegaGaUCrossGene}.
-#'              \item "PUCrossGene" returns \code{xegaGaUPCrossGene}.
+#'              \item "CrossGene" returns \code{xegaGaCrossGene()}.
+#'              \item "UCrossGene" returns \code{xegaGaUCrossGene()}.
+#'              \item "UPCrossGene" returns \code{xegaGaUPCrossGene()}.
 #'              }
 #'              }
+#'
+#' @details Crossover operations which return 2 kids preserve the genetic
+#'          material in the population. However, because we work with fixed 
+#'          size populations, genes with 2 offsprings fill two slots in the
+#'          new population with their genetic material. 
 #'
 #' @param method     A string specifying the crossover function.
 #'

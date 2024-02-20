@@ -9,24 +9,34 @@
 
 #' Replicates a gene.
 #'
-#' @description \code{xegaGaReplicate2Gene} replicates a gene
-#'              by applying a gene reproduction pipeline 
-#'              which uses crossover and
-#'              mutation. The control flow is as follows:
-#'              \itemize{
-#'              \item A gene is selected from the population.
-#'              Check if the crossover operation should be applied.
-#'              (The check is \code{TRUE} with a probability of \code{crossrate}).
-#'              If the check is \code{TRUE}:
-#'              \itemize{
-#'                \item Select a mating gene from the population.
-#'                \item Perform the crossover operation.
-#'                \item Apply mutation with a probability of \code{mutrate}.
-#'                \item Return a list with both genes.
-#'                            }
-#'                \item Apply mutation with a probability of \code{mutrate}.
-#'                \item Return a list with a single gene.
-#'              }
+#' @description \code{xegaGaReplicate2Gene()} replicates a gene
+#'              by 2 random experiments which determine if a mutation 
+#'              operator (boolean variable \code{mut})  and/or 
+#'              a crossover operator (boolean variable \code{cross} 
+#'              should be applied. For each of the 4 cases, the 
+#'              appropriate code is executed.
+#'
+#' @details \code{xegaGaReplicate2Gene()} implements the control flow 
+#'          by case distinction which  depends
+#'          on the random choices for mutation and crossover:
+#' \enumerate{
+#'   \item A gene \code{g} is selected and the boolean variables \code{mut}
+#'         and \code{cross} are set to \code{runif(1)<rate}. 
+#'         \code{rate} is given by 
+#'         \code{lF$MutationRate()} or \code{lF$CrossRate()}. 
+#'   \item The truth values of \code{cross} and \code{mut} determine 
+#'         the code that is executed:
+#'   \enumerate{      
+#'   \item \code{(cross==TRUE) & (mut==TRUE)}: 
+#'           Mate selection,  crossover, mutation. 
+#'   \item \code{(cross==TRUE) & (mut==FALSE)}: 
+#'           Mate selection, crossover. 
+#'   \item \code{(cross==FALSE) & (mut==TRUE)}: 
+#'           Mutation. 
+#'   \item \code{(cross==FALSE) & (mut==FALSE)} is implicit: 
+#'          Returns a gene list. 
+#'   }
+#'   }
 #'
 #' @param pop    A population of binary genes.
 #' @param fit    Fitness vector.
@@ -64,28 +74,24 @@ xegaGaReplicate2Gene<- function(pop, fit, lF)
 
 #' Replicates a gene.
 #'
-#' @description \code{xegaGaReplicateGene} replicates a gene
+#' @description \code{xegaGaReplicateGene()} replicates a gene
 #'              by applying a gene reproduction pipeline 
 #'              which uses crossover and
-#'              mutation. 
-#'              The control flow may have the following steps:
+#'              mutation and finishes with an acceptance rule.
+#'              The control flow starts
+#'              by selecting a gene from the population
+#'              followed by the case distinction:
 #'              \itemize{
-#'              \item A gene is selected from the population.
+#'               \item
+#'              Check if the mutation operation should be applied.
+#'              (\code{mut} is \code{TRUE} with a probability of \code{lF$MutationRate()}).
+#'              \item
 #'              Check if the crossover operation should be applied.
-#'              (The check is \code{TRUE} with a probability of \code{crossrate}).
-#'              If the check is \code{TRUE}:
-#'              \itemize{
-#'                \item Select a mating gene from the population.
-#'                \item Perform the crossover operation.
-#'                \item Apply mutation with a probability of \code{mutrate}.
-#'                \item Return a list one gene.
-#'                            }
-#'                \item Apply mutation with a probability of \code{mutrate}.
-#'                \item Accept gene. For genetic algorithms: Identity.
-#'                \item Return a list with a single gene.
+#'              (\code{cross} is \code{TRUE} with a probability of \code{lF$CrossRate()}).
 #'              }
+#'              The state distinction determines which genetic operations are performed.
 #'
-#' @details \code{xegaGaReplicateGene} implements the control flow 
+#' @details \code{xegaGaReplicateGene()} implements the control flow 
 #'          by a dynamic definition of the operator pipeline depending
 #'          on the random choices for mutation and crossover:
 #' \enumerate{
@@ -104,6 +110,10 @@ xegaGaReplicate2Gene<- function(pop, fit, lF)
 #'           Mutation. 
 #'   }
 #'   \item  Perform the operator pipeline and accept the result.
+#'          The acceptance step allows the combination of a genetic algorithm
+#'          with other heuristic algorithms like simulated 
+#'          annealing by executing an acceptance rule. 
+#'          For the genetic algorithm, the identity function is used.            
 #'   }
 #'
 #' @param pop    Population of binary genes.
@@ -149,14 +159,14 @@ xegaGaReplicateGene<- function(pop, fit, lF)
 
 #' Configure the replication function of a genetic algorithm.
 #'
-#' @description \code{ReplicationFactory} implements the selection
+#' @description \code{xegaGaReplicationFactory()} implements the selection
 #'              of a replication method. 
 #'
 #'              Current support:
 #'
 #'              \enumerate{
-#'              \item "Kid1" returns \code{ReplicateGene}.
-#'              \item "Kid2" returns \code{Replicate2Gene}.
+#'              \item "Kid1" returns \code{xegaGaReplicateGene()}.
+#'              \item "Kid2" returns \code{xegaGaReplicate2Gene()}.
 #'              }
 #'
 #' @param method     A string specifying the replication function.

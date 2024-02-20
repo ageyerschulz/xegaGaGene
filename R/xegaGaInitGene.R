@@ -8,19 +8,20 @@
 
 #' Generate a random binary gene.
 #'
-#' @description \code{xegaGaInitGene} generates a random binary gene 
+#' @description \code{xegaGaInitGene()} generates a random binary gene 
 #'              with a given length.
 #'
 #' @param lF   The local configuration of the genetic algorithm.
 #'
 #' @return A binary gene (a named list):
 #'         \itemize{
-#'         \item \code{$evaluated}: FALSE. See package \code{xegaEvalGene}
+#'         \item \code{$evaluated}: FALSE. See package \code{xegaSelectGene}.
 #'         \item \code{$evalFail}:  FALSE. Set by the error handler(s)
-#'                                  in package \code{xegaEvalGene} 
+#'                                  of the evaluation functions
+#'                                  in package \code{xegaSelectGene} 
 #'                                  in the case of failure.
-#'         \item \code{$fit}:       the fitness
-#'         \item \code{$gene1}:      a binary gene 
+#'         \item \code{$fit}:       Fitness.
+#'         \item \code{$gene1}:     Binary gene.
 #'         }
 #'
 #' @family Gene Generation.

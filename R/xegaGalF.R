@@ -28,11 +28,11 @@
 #'   \item    
 #'       dynamically binding a local function with a definition from a
 #'       proper function factory. E.g., the selection methods 
-#'       \code{lf$SelectGene} and \code{SelectMate}.
+#'       \code{lF$SelectGene()} and \code{lF$SelectMate()}.
 #'       
 #'  \item gene representations which require special functions to handle them:
-#'        \code{lf$InitGene}, \code{lF$DecodeGene}, \code{lf$EvalGene}
-#'        \code{lf$ReplicateGene}, ...
+#'        \code{lF$InitGene()}, \code{lF$DecodeGene()}, \code{lF$EvalGene()},
+#'        \code{lF$ReplicateGene()}, ...
 #'       
 #'  } 
 #'
@@ -54,8 +54,9 @@ MutationRate1=xegaSelectGene::parm(0.01),
 MutationRate2=xegaSelectGene::parm(0.20),
 BitMutationRate1=xegaSelectGene::parm(0.01),
 BitMutationRate2=xegaSelectGene::parm(0.20),
+MutationRate=function(fit, lF) {1.0},
 MutateGene=xegaGaMutationFactory(),
-CrossRate=function(fit, lF) {0.5},
+CrossRate=function(fit, lF) {0.2},
 UCrossSwap=xegaSelectGene::parm(0.2),
 CrossGene=xegaGaCrossoverFactory(),
 Max=xegaSelectGene::parm(1),

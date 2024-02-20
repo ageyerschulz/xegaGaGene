@@ -21,7 +21,7 @@
 
 #' Map the bit strings of a binary gene to an identical bit vector.
 #'
-#' @description \code{xegaGaGenemapIdentity} maps the bit strings 
+#' @description \code{xegaGaGeneMapIdentity()} maps the bit strings 
 #'              of a binary vector
 #'              to an identical binary vector.
 #'              Faster for all problems with single-bit coding.
@@ -30,7 +30,7 @@
 #' @param gene    A binary gene (the genotype).
 #' @param penv    A problem environment.
 #'
-#' @return The decoded gene (the phenotype).
+#' @return A binary gene (the phenotype).
 #'
 #' @family Decoder
 #'
@@ -46,7 +46,7 @@ return(gene)
 
 #' Map the bit strings of a binary gene to parameters in an interval.
 #'
-#' @description \code{xegaGaGenemap} maps the bit strings of a binary string 
+#' @description \code{xegaGaGeneMap()} maps the bit strings of a binary string 
 #'              to parameters in an interval.
 #'              Bit vectors are mapped into equispaced numbers in the interval.
 #'              Examples: Optimization of problems with real-valued 
@@ -105,7 +105,7 @@ Gray2Bin<-function(x)
 
 #' Map the bit strings of a gray-coded gene to parameters in an interval.
 #'
-#' @description \code{xegaGaGenemapGray} maps the bit strings of 
+#' @description \code{xegaGaGeneMapGray()} maps the bit strings of 
 #'              a binary string 
 #'              interpreted as Gray codes to parameters in an interval.
 #'              Bit vectors are mapped into equispaced numbers in the interval.
@@ -159,7 +159,8 @@ without<-function(x, y)
 
 #' Map the bit strings of a binary gene to a permutation.
 #'
-#' @description \code{xegaGaGeneMapPerm} maps the bit strings of a binary string 
+#' @description \code{xegaGaGeneMapPerm()} maps 
+#'              the bit strings of a binary string 
 #'              to a permutation of integers.
 #'              Example: Traveling Salesman Problem (TSP).
 #'
@@ -191,7 +192,7 @@ return(parm)
 
 #' Configure the gene map function of a genetic algorithm.
 #'
-#' @description \code{xegaGaGeneMapFactory} implements the selection
+#' @description \code{xegaGaGeneMapFactory()} implements the selection
 #'              of one of the GeneMap functions in this
 #'              package by specifying a text string.
 #'              The selection fails ungracefully (produces
@@ -201,10 +202,10 @@ return(parm)
 #'              Current support:
 #'
 #'              \enumerate{
-#'              \item "Bin2Dec" returns \code{GeneMap}. (Default).
-#'              \item "Gray2Dec" returns \code{GeneMapGray}.
-#'              \item "Identity" returns \code{GeneMapIdentity}.
-#'              \item "Permutation" returns \code{GeneMapPerm}.
+#'              \item "Bin2Dec" returns \code{xegaGaGeneMap()}. (Default).
+#'              \item "Gray2Dec" returns \code{xegaGaGeneMapGray()}.
+#'              \item "Identity" returns \code{xegaGaGeneMapIdentity()}.
+#'              \item "Permutation" returns \code{xegaGaGeneMapPerm()}.
 #'              }
 #'
 #' @param method A string specifying the GeneMap function.
@@ -215,8 +216,8 @@ return(parm)
 #'
 #' @examples
 #' XGene<-xegaGaGeneMapFactory("Identity")
-#' gene1<-xegaGaInitGene(lFxegaGaGene)
-#' XGene(gene1, lFxegaGaGene$penv)
+#' gene<-xegaGaInitGene(lFxegaGaGene)
+#' XGene(gene$gene1, lFxegaGaGene$penv)
 #' @export
 xegaGaGeneMapFactory<-function(method="Bin2Dec") {
 if (method=="Bin2Dec") {f<-xegaGaGeneMap}
@@ -230,7 +231,7 @@ return(f)
 
 #' Decode a gene.
 #'
-#' @description \code{xegaGaDecodeGene} decodes a binary gene.
+#' @description \code{xegaGaDecodeGene()} decodes a binary gene.
 #'
 #' @param gene   A binary gene (the genotype).
 #' @param lF     The local configuration of the genetic algorithm.
