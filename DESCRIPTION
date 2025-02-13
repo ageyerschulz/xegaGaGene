@@ -21,10 +21,10 @@ Description: Representation-dependent gene level operations of a
         For mutation operators, see 
         Stanhope, S. A. and Daida, J. M. (1996, ISBN:0-18-201-031-7).
 License: MIT + file LICENSE
-URL: <https://github.com/ageyerschulz/xegaGaGene>
+URL: https://github.com/ageyerschulz/xegaGaGene
 Encoding: UTF-8
 LazyData: false
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Suggests: testthat (>= 3.0.0)
 Imports:
 	xegaSelectGene
