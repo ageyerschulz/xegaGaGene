@@ -10,8 +10,21 @@ Version 1.0.0.1 (2024-02-07)
        1-point crossover  decreased by 1.
        Consequence: Genes must be mixed.
 
-Version 1.0.0.1 (2024-02-20)
+Version 1.0.0.2 (2024-02-20)
 
 - Multiple improvements of documentation fo functions.
 - Removed redundant unit tests.
+
+Version 1.0.0.3 (2025-06-27)
+
+- xegaReplicateGenePipeline() returns closures of 
+  operator pipelines (1 kid). This shifts execution of the 
+  genetic mechanism to the evaluation phase.
+- xegaGeReplicationFactory() added pipeline variant 
+  for 1 kid.
+- List lFxegaGaGene: Added lFxegaGaGene$Accept() for operator pipelines.
+- newPipeline() added.
+- newCrossPipeline() added.
+- newMutPipeline() added
+- newCrossMutPipeline() added
 
