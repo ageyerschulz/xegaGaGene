@@ -125,21 +125,32 @@ xegaGaReplicate2Gene<- function(pop, fit, lF)
 xegaGaReplicate2GenePipeline<- function(pop, fit, lF)
 {
     g<-pop[[lF$SelectGene(fit, lF)]]
-    mut<-stats::runif(1)<lF$MutationRate(g$fit, lF)
+    mut1<-stats::runif(1)<lF$MutationRate(g$fit, lF)
+    mut2<-stats::runif(1)<lF$MutationRate(g$fit, lF)
     cross<-stats::runif(1)<lF$CrossRate(g$fit, lF)
 
-    if ((!cross) && (!mut)) { return(newPipeline(g, lF)) }
+    if ((!cross) && (!mut1)) { return(newPipeline(g, lF)) }
 
-    if (cross && mut)
+    if (cross && mut1 && mut2)
     { g1<-pop[[lF$SelectMate(fit, lF)]]
       return(newCrossMut2Pipeline(g, g1, lF))
     }
 
-    if ((cross) && (!mut))
+    if (cross && mut1 && (!mut2))
+    { g1<-pop[[lF$SelectMate(fit, lF)]]
+      return(newCross2Mut1Pipeline(g, g1, lF))
+    }
+
+    if (cross && (!mut1) && mut2)
+    { g1<-pop[[lF$SelectMate(fit, lF)]]
+      return(newCross2Mut2Pipeline(g, g1, lF))
+    }
+
+    if ((cross) && (!mut1) && (!mut2))
     { g1<-pop[[lF$SelectMate(fit, lF)]]
       return(newCross2Pipeline(g, g1,  lF)) }
 
-    if ((!cross) && (mut)) { return(newMutPipeline(g, lF)) }
+    if ((!cross) && (mut1)) { return(newMutPipeline(g, lF)) }
 
     stop("xegaGaGene::xegaGaReplicateGenePipeline(): Error in conditions!")
 }
