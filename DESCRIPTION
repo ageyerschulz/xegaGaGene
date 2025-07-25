@@ -1,6 +1,6 @@
 Package: xegaGaGene 
 Title: Binary Gene Operations for Genetic Algorithms 
-Version: 1.0.0.3
+Version: 1.0.0.4
 Authors@R: 
     person(given = "Andreas",
            family = "Geyer-Schulz",

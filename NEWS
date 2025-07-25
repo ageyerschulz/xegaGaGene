@@ -28,3 +28,10 @@ Version 1.0.0.3 (2025-06-27)
 - newMutPipeline() added
 - newCrossMutPipeline() added
 
+Version 1.0.0.4 (2025-07-25)
+
+- newCross2Mut1Pipeline() added
+- newCross2Mut2Pipeline() added
+- newCrossMut2Pipeline() added
+- newCross2Pipeline() added
+

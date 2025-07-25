@@ -74,6 +74,78 @@ xegaGaReplicate2Gene<- function(pop, fit, lF)
 
 #' Replicates a gene.
 #'
+#' @description \code{xegaGaReplicate2Gene()} replicates a gene
+#'              by 2 random experiments which determine if a mutation 
+#'              operator (boolean variable \code{mut})  and/or 
+#'              a crossover operator (boolean variable \code{cross} 
+#'              should be applied. For each of the 4 cases, the 
+#'              appropriate code is executed.
+#'
+#' @details \code{xegaGaReplicate2GenePipeline()} implements the control flow 
+#'          by case distinction which  depends
+#'          on the random choices for mutation and crossover:
+#' \enumerate{
+#'   \item A gene \code{g} is selected and the boolean variables \code{mut}
+#'         and \code{cross} are set to \code{runif(1)<rate}. 
+#'         \code{rate} is given by 
+#'         \code{lF$MutationRate()} or \code{lF$CrossRate()}. 
+#'   \item The truth values of \code{cross} and \code{mut} determine 
+#'         the code that is executed:
+#'   \enumerate{      
+#'   \item \code{(cross==TRUE) & (mut==TRUE)}: 
+#'           Mate selection,  crossover, mutation. 
+#'   \item \code{(cross==TRUE) & (mut==FALSE)}: 
+#'           Mate selection, crossover. 
+#'   \item \code{(cross==FALSE) & (mut==TRUE)}: 
+#'           Mutation. 
+#'   \item \code{(cross==FALSE) & (mut==FALSE)} is implicit: 
+#'          Returns a gene list. 
+#'   }
+#'   }
+#'
+#' @param pop    A population of binary genes.
+#' @param fit    Fitness vector.
+#' @param lF     The local configuration of the genetic algorithm.
+#'
+#' @return A list of either 1 or 2 binary genes.
+#'
+#' @family Replication
+#'
+#' @examples
+#' lFxegaGaGene$CrossGene<-xegaGaCross2Gene
+#' lFxegaGaGene$MutationRate<-function(fit, lF) {0.001}
+#' names(lFxegaGaGene)
+#' pop10<-lapply(rep(0,10), function(x) xegaGaInitGene(lFxegaGaGene))
+#' epop10<-lapply(pop10, lFxegaGaGene$EvalGene, lF=lFxegaGaGene)
+#' fit10<-unlist(lapply(epop10, function(x) {x$fit}))
+#' newgenes<-xegaGaReplicate2Gene(pop10, fit10, lFxegaGaGene)
+#'
+#' @importFrom stats runif
+#' @export
+xegaGaReplicate2GenePipeline<- function(pop, fit, lF)
+{
+    g<-pop[[lF$SelectGene(fit, lF)]]
+    mut<-stats::runif(1)<lF$MutationRate(g$fit, lF)
+    cross<-stats::runif(1)<lF$CrossRate(g$fit, lF)
+
+    if ((!cross) && (!mut)) { return(newPipeline(g, lF)) }
+
+    if (cross && mut)
+    { g1<-pop[[lF$SelectMate(fit, lF)]]
+      return(newCrossMut2Pipeline(g, g1, lF))
+    }
+
+    if ((cross) && (!mut))
+    { g1<-pop[[lF$SelectMate(fit, lF)]]
+      return(newCross2Pipeline(g, g1,  lF)) }
+
+    if ((!cross) && (mut)) { return(newMutPipeline(g, lF)) }
+
+    stop("xegaGaGene::xegaGaReplicateGenePipeline(): Error in conditions!")
+}
+
+#' Replicates a gene.
+#'
 #' @description \code{xegaGaReplicateGene()} replicates a gene
 #'              by applying a gene reproduction pipeline 
 #'              which uses crossover and
@@ -251,8 +323,11 @@ xegaGaReplicateGenePipeline<- function(pop, fit, lF)
 #'
 #'              \enumerate{
 #'              \item "Kid1" returns \code{xegaGaReplicateGene()}.
-#'              \item "Kid1Pipeline" returns \code{xegaGaReplicateGenePipeline()}.
+#'              \item "Kid1Pipeline" returns 
+#'                     \code{xegaGaReplicateGenePipeline()}.
 #'              \item "Kid2" returns \code{xegaGaReplicate2Gene()}.
+#'              \item "Kid2Pipeline" returns 
+#'                     \code{xegaGaReplicate2GenePipeline()}.
 #'              }
 #'
 #' @param method     A string specifying the replication function.
@@ -278,6 +353,7 @@ xegaGaReplicationFactory<-function(method="Kid1") {
 if (method=="Kid1") {f<- xegaGaReplicateGene}
 if (method=="Kid1Pipeline") {f<- xegaGaReplicateGenePipeline}
 if (method=="Kid2") {f<- xegaGaReplicate2Gene}
+if (method=="Kid2Pipeline") {f<- xegaGaReplicate2GenePipeline}
 if (!exists("f", inherits=FALSE))
         {stop("xegaGaGene Replication label ", method, " does not exist")}
 return(f)
