@@ -34,4 +34,7 @@ Version 1.0.0.4 (2025-07-25)
 - newCross2Mut2Pipeline() added
 - newCrossMut2Pipeline() added
 - newCross2Pipeline() added
+- xegaReplicate2GenePipeline() returns closures of 
+  operator pipelines (2 kids). This shifts execution of the 
+  genetic mechanism to the evaluation phase.
 
