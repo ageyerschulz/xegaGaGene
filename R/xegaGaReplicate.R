@@ -75,15 +75,18 @@ xegaGaReplicate2Gene<- function(pop, fit, lF)
 #' Replicates a gene.
 #'
 #' @description \code{xegaGaReplicate2Gene()} replicates a gene
-#'              by 2 random experiments which determine if a mutation 
-#'              operator (boolean variable \code{mut})  and/or 
+#'              by 3 random experiments which determine if a mutation 
+#'              operator (boolean variable \code{mut1} and \code{mut2})  
+#'              and/or 
 #'              a crossover operator (boolean variable \code{cross} 
-#'              should be applied. For each of the 4 cases, the 
-#'              appropriate code is executed.
+#'              should be applied. For each of the 8 cases, the 
+#'              appropriate pipeline constructor is executed.
 #'
 #' @details \code{xegaGaReplicate2GenePipeline()} implements the control flow 
 #'          by case distinction which  depends
-#'          on the random choices for mutation and crossover:
+#'          on the random choices for mutation and crossover.
+#'          The pipeline constructor chosen returns the function closure 
+#'          with the appropriate genetic operator pipeline.
 #' \enumerate{
 #'   \item A gene \code{g} is selected and the boolean variables \code{mut1},
 #'         \code{mut2}, 
@@ -92,25 +95,30 @@ xegaGaReplicate2Gene<- function(pop, fit, lF)
 #'         \code{lF$MutationRate()} or \code{lF$CrossRate()}. 
 #'   \item The truth values of \code{cross}, \code{mut1}, and \code{mut2} 
 #'         determine 
-#'         the code that is executed:
+#'         the genetic operator pipeline constructor that is executed:
 #'   \enumerate{      
 #'   \item \code{(cross==FALSE) & (mut1==FALSE)} is implicit: 
-#'         Returns \code{newPipeline} which when executed returns a gene list.  
+#'         Executes the pipeline constructor \code{newPipeline}.  
 #'   \item \code{(cross==TRUE) & (mut1==TRUE) & (mut2==TRUE)}: 
-#'           Mate selection,  crossover, mutation on both kids. 
-#'         Returns \code{newCrossMut2Pipeline}.
+#'         Crossover, mutation on both kids. 
+#'         Executes the genetic operator 
+#'         pipeline constructor \code{newCrossMut2Pipeline}.
 #'   \item \code{(cross==TRUE) & (mut1==TRUE) & (mut2==FALSE)}: 
-#'           Mate selection,  crossover, mutation on first kid. 
-#'         Returns \code{newCross2Mut1Pipeline}.
+#'         Crossover, mutation on first kid. 
+#'         Executes the genetic operator 
+#'         pipeline constructor \code{newCross2Mut1Pipeline}.
 #'   \item \code{(cross==TRUE) & (mut1==FALSE) & (mut2==TRUE)}: 
-#'           Mate selection,  crossover, mutation on second kid. 
-#'         Returns \code{newCross2Mut2Pipeline}.
+#'         Crossover, mutation on second kid. 
+#'         Executes the genetic operator 
+#'         pipeline constructor \code{newCross2Mut2Pipeline}.
 #'   \item \code{(cross==TRUE) & (mut1==FALSE) & (mut2==FALSE)}: 
-#'           Mate selection, crossover (2 kids). 
-#'         Returns \code{newCross2Pipeline}.
+#'         Crossover (2 kids). 
+#'         Executes the genetic operator 
+#'         pipeline constructor \code{newCross2Pipeline}.
 #'   \item \code{(cross==FALSE) & (mut1==TRUE)}: 
-#'           Mutation. 
-#'         Returns \code{newMutPipeline}.
+#'         Mutation. 
+#'         Executes the genetic operator 
+#'         pipeline constructor \code{newMutPipeline}.
 #'   }
 #'   }
 #'
