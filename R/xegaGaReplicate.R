@@ -85,21 +85,32 @@ xegaGaReplicate2Gene<- function(pop, fit, lF)
 #'          by case distinction which  depends
 #'          on the random choices for mutation and crossover:
 #' \enumerate{
-#'   \item A gene \code{g} is selected and the boolean variables \code{mut}
+#'   \item A gene \code{g} is selected and the boolean variables \code{mut1},
+#'         \code{mut2}, 
 #'         and \code{cross} are set to \code{runif(1)<rate}. 
 #'         \code{rate} is given by 
 #'         \code{lF$MutationRate()} or \code{lF$CrossRate()}. 
-#'   \item The truth values of \code{cross} and \code{mut} determine 
+#'   \item The truth values of \code{cross}, \code{mut1}, and \code{mut2} 
+#'         determine 
 #'         the code that is executed:
 #'   \enumerate{      
-#'   \item \code{(cross==TRUE) & (mut==TRUE)}: 
-#'           Mate selection,  crossover, mutation. 
-#'   \item \code{(cross==TRUE) & (mut==FALSE)}: 
-#'           Mate selection, crossover. 
-#'   \item \code{(cross==FALSE) & (mut==TRUE)}: 
+#'   \item \code{(cross==FALSE) & (mut1==FALSE)} is implicit: 
+#'         Returns \code{newPipeline} which when executed returns a gene list.  
+#'   \item \code{(cross==TRUE) & (mut1==TRUE) & (mut2==TRUE)}: 
+#'           Mate selection,  crossover, mutation on both kids. 
+#'         Returns \code{newCrossMut2Pipeline}.
+#'   \item \code{(cross==TRUE) & (mut1==TRUE) & (mut2==FALSE)}: 
+#'           Mate selection,  crossover, mutation on first kid. 
+#'         Returns \code{newCross2Mut1Pipeline}.
+#'   \item \code{(cross==TRUE) & (mut1==FALSE) & (mut2==TRUE)}: 
+#'           Mate selection,  crossover, mutation on second kid. 
+#'         Returns \code{newCross2Mut2Pipeline}.
+#'   \item \code{(cross==TRUE) & (mut1==FALSE) & (mut2==FALSE)}: 
+#'           Mate selection, crossover (2 kids). 
+#'         Returns \code{newCross2Pipeline}.
+#'   \item \code{(cross==FALSE) & (mut1==TRUE)}: 
 #'           Mutation. 
-#'   \item \code{(cross==FALSE) & (mut==FALSE)} is implicit: 
-#'          Returns a gene list. 
+#'         Returns \code{newMutPipeline}.
 #'   }
 #'   }
 #'
