@@ -17,13 +17,16 @@
 #'       These functions allow the construction of gene evaluation pipelines.
 #'       One advantage of this is a simple control structure 
 #'       at the population level.
+#'       }
+#' \item Constructors for abstract genetic operator pipelines embedded in function closures.
 #' \item Gene replication functions as well as a function factory for 
 #'       configuration. The replication functions implement control flows
 #'       for sequences of gene operations. For \code{xegaReplicateGene}, 
 #'       an acceptance step has been added. Simulated annealing algorithms
 #'       can be configured e.g. by configuring uniform random selection combined
 #'       with a Metropolis Acceptance Rule and a suitable cooling schedule.
-#' }
+#' \item Constructors for abstract genetic operator pipelines embedded in function closures.
+#' \item Gene replication functions which compile function closures with genetic operator pipelines.
 #' }
 #' 
 #' @section Binary Gene Representation:
@@ -115,14 +118,51 @@
 #'                     \tab                \tab UPCrossGene() \cr 
 #' }
 #'
+#' @section Abstract Gene Operator Pipelines:
+#'
+#' Compiling abstract gene operator pipelines based on random experiments
+#' generates function closures which when evaluated produce an evaluated 
+#' gene. With pipelines, the gene life cycle looks like this:  
+#' 
+#' evaluated gene -> replicate -> replicated gene -> evaluate -> evaluated gene     
+#'
+#' where evaluated genes are data structures (named lists) and replicated genes are 
+#' function closures (genetic operator pipelines bound with selected genes). 
+#'
+#' Pipelines lead to the following separation of work between the replication and 
+#' the evaluation phase of the genetic algorithm
+#' \enumerate{
+#'   \item The replication phase of the genetic algorithm consists of compiling function closures.
+#'   \item The evaluation phase consists of the actual execution 
+#'         of the complete genetic operator pipeline: 
+#'         \code{evaluate(accept(mutate(crossover(gene1, gene2))))}. 
+#'  }  
+#'
+#' For sequential execution models, pipelines may lead to small performance gains, 
+#' because the compilation phase produces minimal genetic operator pipelines.
+#'
+#' For parallel or distributed execution models, the replication phase is still executed 
+#' sequentially whereas the evaluation of the population of function closures is done in 
+#' parallel. The effect is that most of the computational work of the genetic algorithm 
+#' is shifted to the evaluation phase and thus executed in parallel. 
+#'
+#' The pipeline mechanism implemented is completely abstract and independent of the actual 
+#' gene representation. However, algorithms like e.g. differential evolution 
+#' which use more than two genes may need 
+#' replication functions which compile appropriate function closures.
+#'
 #' @section Abstract Interface of Gene Replication Functions:
 #'
-#' The signatures of the abstract interface to the 2 
+#' The signatures of the abstract interface to the 4 
 #' gene replication functions are:
 #'
-#'     ListOfTwoGenes<-Replicate2Gene(gene1, gene2, lF) 
+#'     ListOfTwoGenes<-Replicate2Gene(pop, fit, lF) 
 #'
-#'     ListOfOneGene<-ReplicateGene(gene1, gene2, lF) 
+#'     ListOfOneGene<-ReplicateGene(pop, fit, lF) 
+#'
+#'     ListOfFunctionClosures<-Replicate2GenePipeline(pop, fit, lF) 
+#'
+#'     ListOfFunctionClosures<-ReplicateGenePipeline(pop, fit, lF)
 #'
 #' @section Configuration and Constants of Replication Functions:
 #'
@@ -143,7 +183,7 @@
 #' \strong{Function} \tab \strong{Default} \tab Configured By \cr 
 #' lF$SelectGene()   \tab SelectSUS()        \tab SelectGeneFactory() \cr 
 #' lF$SelectMate()   \tab SelectSUS()        \tab SelectGeneFactory() \cr 
-#' lF$CrossGene()    \tab CrossGene()        \tab xegaGaCrossoverFactory() \cr
+#' lF$CrossGene()    \tab Cross2Gene()        \tab xegaGaCrossoverFactory() \cr
 #' lF$MutateGene()   \tab MutateGene()       \tab xegaGaMutationFactory() \cr
 #' }
 #'

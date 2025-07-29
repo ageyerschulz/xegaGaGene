@@ -10,6 +10,9 @@
 #'
 #' @description The pipeline is \code{evaluate(gene)}.
 #'
+#' @details \code{newPipeline} is a constructor of a function closure which 
+#'          contains the evaluation of a gene.  
+#'
 #' @param  g   A gene.
 #' @param  lF  The local function configuration.
 #'
@@ -228,7 +231,7 @@ return(Pipeline)
 #' @param  lF  The local function configuration.
 #'
 #' @return Closure of genetic operator pipeline 
-#'         with crossover only.
+#'         with crossover with two kids and mutation on both kids.
 #'         The argument of the closure \code{lF} 
 #'         configures the behavior of the pipeline.
 #' 
@@ -274,7 +277,7 @@ return(Pipeline)
 #' @param  lF  The local function configuration.
 #'
 #' @return Closure of genetic operator pipeline 
-#'         with crossover only.
+#'         with crossover with 2 kids and mutation on the first kid only.
 #'         The argument of the closure \code{lF} 
 #'         configures the behavior of the pipeline.
 #' 
@@ -320,7 +323,7 @@ return(Pipeline)
 #' @param  lF  The local function configuration.
 #'
 #' @return Closure of genetic operator pipeline 
-#'         with crossover only.
+#'         with crossover with 2 kids and mutation on the second kid only.
 #'         The argument of the closure \code{lF} 
 #'         configures the behavior of the pipeline.
 #' 

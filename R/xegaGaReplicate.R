@@ -7,14 +7,14 @@
 #          Package: xegaGaGene
 #
 
-#' Replicates a gene.
+#' Replicates a gene with a crossover operator with 2 kids.
 #'
 #' @description \code{xegaGaReplicate2Gene()} replicates a gene
 #'              by 2 random experiments which determine if a mutation 
 #'              operator (boolean variable \code{mut})  and/or 
 #'              a crossover operator (boolean variable \code{cross} 
 #'              should be applied. For each of the 4 cases, the 
-#'              appropriate code is executed.
+#'              appropriate code is executed and the genes are generated.
 #'
 #' @details \code{xegaGaReplicate2Gene()} implements the control flow 
 #'          by case distinction which  depends
@@ -72,15 +72,16 @@ xegaGaReplicate2Gene<- function(pop, fit, lF)
   return(list(g))
 }
 
-#' Replicates a gene.
+#' Replicates a gene with a crossover operator with 2 kids by generating a list of function closures.
 #'
-#' @description \code{xegaGaReplicate2Gene()} replicates a gene
+#' @description \code{xegaGaReplicate2GenePipeline()} replicates a gene
 #'              by 3 random experiments which determine if a mutation 
 #'              operator (boolean variable \code{mut1} and \code{mut2})  
 #'              and/or 
 #'              a crossover operator (boolean variable \code{cross} 
 #'              should be applied. For each of the 8 cases, the 
-#'              appropriate pipeline constructor is executed.
+#'              appropriate pipeline constructor is executed
+#'              and the genetic operator pipeline(s) is (are) returned.
 #'
 #' @details \code{xegaGaReplicate2GenePipeline()} implements the control flow 
 #'          by case distinction which  depends
@@ -126,7 +127,7 @@ xegaGaReplicate2Gene<- function(pop, fit, lF)
 #' @param fit    Fitness vector.
 #' @param lF     The local configuration of the genetic algorithm.
 #'
-#' @return A list of either 1 or 2 binary genes.
+#' @return A list of either 1 or 2 function closures with the operator pipeline.
 #'
 #' @family Replication
 #'
@@ -137,7 +138,7 @@ xegaGaReplicate2Gene<- function(pop, fit, lF)
 #' pop10<-lapply(rep(0,10), function(x) xegaGaInitGene(lFxegaGaGene))
 #' epop10<-lapply(pop10, lFxegaGaGene$EvalGene, lF=lFxegaGaGene)
 #' fit10<-unlist(lapply(epop10, function(x) {x$fit}))
-#' newgenes<-xegaGaReplicate2Gene(pop10, fit10, lFxegaGaGene)
+#' newgenes<-xegaGaReplicate2GenePipeline(pop10, fit10, lFxegaGaGene)
 #'
 #' @importFrom stats runif
 #' @export
@@ -171,10 +172,10 @@ xegaGaReplicate2GenePipeline<- function(pop, fit, lF)
 
     if ((!cross) && (mut1)) { return(newMutPipeline(g, lF)) }
 
-    stop("xegaGaGene::xegaGaReplicateGenePipeline(): Error in conditions!")
+    stop("xegaGaGene::xegaGaReplicate2GenePipeline(): Error in conditions!")
 }
 
-#' Replicates a gene.
+#' Replicates a gene with a crossover operator which returns a single gene.
 #'
 #' @description \code{xegaGaReplicateGene()} replicates a gene
 #'              by applying a gene reproduction pipeline 
@@ -259,7 +260,7 @@ xegaGaReplicateGene<- function(pop, fit, lF)
   return(list(lF$Accept(OPpip, g, lF)))
 }
 
-#' Replicates a gene pipeline.
+#' Replicates a gene by generating a pipeline with a crossover operator returning a single kid.
 #'
 #' @description \code{xegaGaReplicateGenePipeline()} returns
 #'              a gene reproduction pipeline 
