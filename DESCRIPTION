@@ -1,6 +1,6 @@
 Package: xegaGaGene 
 Title: Binary Gene Operations for Genetic Algorithms 
-Version: 1.0.0.4
+Version: 1.0.0.5
 Authors@R: 
     person(given = "Andreas",
            family = "Geyer-Schulz",
@@ -27,4 +27,5 @@ LazyData: false
 RoxygenNote: 7.3.2
 Suggests: testthat (>= 3.0.0)
 Imports:
+        rlang,
 	xegaSelectGene

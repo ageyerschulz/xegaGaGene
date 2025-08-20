@@ -32,13 +32,12 @@
 #' a<-newPipeline(g, lFxegaGaGene)
 #' print(a)
 #' a(lFxegaGaGene)
+#' @importFrom rlang env_unbind
 #' @export
 newPipeline<-function(g, lF)
-{ gene<-g
-  Pipeline<-function(lF) 
-  {  lF$EvalGene(gene, lF) }
-  # force
-  a<-gene
+{ Pipeline<-function(lF) 
+  {  lF$EvalGene(g, lF) }
+  rlang::env_unbind(environment(Pipeline), c("lF")) 
   return(Pipeline)
 }
 
@@ -69,14 +68,13 @@ newPipeline<-function(g, lF)
 #' a<-newMutPipeline(g, lFxegaGaGene)
 #' print(a)
 #' a(lFxegaGaGene)
+#' @importFrom rlang env_unbind
 #' @export
 newMutPipeline<-function(g, lF)
 {
-gene<-g
 Pipeline<-function(lF) 
-{  lF$EvalGene(lF$Accept(lF$MutateGene, gene, lF), lF) }
-# force
-a<-gene
+{  lF$EvalGene(lF$Accept(lF$MutateGene, g, lF), lF) }
+  rlang::env_unbind(environment(Pipeline), c("lF")) 
 return(Pipeline)
 }
 
@@ -109,18 +107,15 @@ return(Pipeline)
 #' a<-newCrossPipeline(g, g1, lFxegaGaGene)
 #' print(a)
 #' a(lFxegaGaGene)
+#' @importFrom rlang env_unbind
 #' @export
 newCrossPipeline<-function(g, g1, lF)
 {
-gene<-g
-gene1<-g1
 Pipeline<-function(lF) 
 {  OPpip<-function(g, lF)
-    { lF$CrossGene(gene, gene1, lF)[[1]]}
-   lF$EvalGene(lF$Accept(OPpip, gene, lF), lF) }
-# force
-a<-gene
-a<-gene1
+    { lF$CrossGene(g, g1, lF)[[1]]}
+   lF$EvalGene(lF$Accept(OPpip, g, lF), lF) }
+  rlang::env_unbind(environment(Pipeline), c("lF")) 
 return(Pipeline)
 }
 
@@ -150,23 +145,20 @@ return(Pipeline)
 #' a<-newCross2Pipeline(g, g1, lFxegaGaGene)
 #' print(a)
 #' a(lFxegaGaGene)
+#' @importFrom rlang env_unbind
 #' @export
 newCross2Pipeline<-function(g, g1, lF)
 {
-gene<-g
-gene1<-g1
 Pipeline<-function(lF) 
-{   g1g2<-lF$CrossGene(gene, gene1, lF)
+{   g1g2<-lF$CrossGene(g, g1, lF)
     OPpip1<-function(g, lF)
     {g1g2[[1]]}
     OPpip2<-function(g, lF)
     {g1g2[[2]]}
-   list(lF$EvalGene(lF$Accept(OPpip1, gene, lF), lF), 
-   lF$EvalGene(lF$Accept(OPpip2, gene, lF), lF)) 
+   list(lF$EvalGene(lF$Accept(OPpip1, g, lF), lF), 
+   lF$EvalGene(lF$Accept(OPpip2, g, lF), lF)) 
      }
-# force
-a<-gene
-a<-gene1
+  rlang::env_unbind(environment(Pipeline), c("lF")) 
 return(Pipeline)
 }
 
@@ -201,21 +193,16 @@ return(Pipeline)
 #' a<-newCrossMutPipeline(g, g1, lFxegaGaGene)
 #' print(a)
 #' a(lFxegaGaGene)
+#' @importFrom rlang env_unbind
 #' @export
 newCrossMutPipeline<-function(g, g1, lF)
-{
-gene<-g
-gene1<-g1
-Pipeline<-function(lF) 
+{ Pipeline<-function(lF) 
 {  OPpip<-function(g, lF)
-    { g1<-lF$CrossGene(gene, gene1, lF)[[1]]
-      lF$MutateGene(g1, lF)} 
-   lF$EvalGene(lF$Accept(OPpip, gene, lF), lF) }
-# force
-a<-gene
-a<-gene1
-return(Pipeline)
-}
+    { g2<-lF$CrossGene(g, g1, lF)[[1]]
+      lF$MutateGene(g2, lF)} 
+   lF$EvalGene(lF$Accept(OPpip, g, lF), lF) }
+  rlang::env_unbind(environment(Pipeline), c("lF")) 
+return(Pipeline) }
 
 #
 # Pipeline 5: Crossover and Mutation
@@ -247,23 +234,20 @@ return(Pipeline)
 #' a<-newCrossMut2Pipeline(g, g1, lFxegaGaGene)
 #' print(a)
 #' a(lFxegaGaGene)
+#' @importFrom rlang env_unbind
 #' @export
 newCrossMut2Pipeline<-function(g, g1, lF)
 {
-gene<-g
-gene1<-g1
 Pipeline<-function(lF) 
-{   g1g2<-lF$CrossGene(gene, gene1, lF)
+{   g1g2<-lF$CrossGene(g, g1, lF)
     OPpip1<-function(g, lF)
       {lF$MutateGene(g1g2[[1]], lF)} 
     OPpip2<-function(g, lF)
       {lF$MutateGene(g1g2[[2]], lF)} 
-   list(lF$EvalGene(lF$Accept(OPpip1, gene, lF), lF), 
-   lF$EvalGene(lF$Accept(OPpip2, gene, lF), lF)) 
+   list(lF$EvalGene(lF$Accept(OPpip1, g, lF), lF), 
+   lF$EvalGene(lF$Accept(OPpip2, g, lF), lF)) 
      }
-# force
-a<-gene
-a<-gene1
+  rlang::env_unbind(environment(Pipeline), c("lF")) 
 return(Pipeline)
 }
 
@@ -293,23 +277,20 @@ return(Pipeline)
 #' a<-newCross2Mut1Pipeline(g, g1, lFxegaGaGene)
 #' print(a)
 #' a(lFxegaGaGene)
+#' @importFrom rlang env_unbind
 #' @export
 newCross2Mut1Pipeline<-function(g, g1, lF)
 {
-gene<-g
-gene1<-g1
 Pipeline<-function(lF) 
-{   g1g2<-lF$CrossGene(gene, gene1, lF)
+{   g1g2<-lF$CrossGene(g, g1, lF)
     OPpip1<-function(g, lF)
       {lF$MutateGene(g1g2[[1]], lF)} 
     OPpip2<-function(g, lF)
       {g1g2[[2]]} 
-   list(lF$EvalGene(lF$Accept(OPpip1, gene, lF), lF), 
-   lF$EvalGene(lF$Accept(OPpip2, gene, lF), lF)) 
+   list(lF$EvalGene(lF$Accept(OPpip1, g, lF), lF), 
+   lF$EvalGene(lF$Accept(OPpip2, g, lF), lF)) 
      }
-# force
-a<-gene
-a<-gene1
+  rlang::env_unbind(environment(Pipeline), c("lF")) 
 return(Pipeline)
 }
 
@@ -339,22 +320,19 @@ return(Pipeline)
 #' a<-newCross2Mut1Pipeline(g, g1, lFxegaGaGene)
 #' print(a)
 #' a(lFxegaGaGene)
+#' @importFrom rlang env_unbind
 #' @export
 newCross2Mut2Pipeline<-function(g, g1, lF)
 {
-gene<-g
-gene1<-g1
 Pipeline<-function(lF) 
-{   g1g2<-lF$CrossGene(gene, gene1, lF)
+{   g1g2<-lF$CrossGene(g, g1, lF)
     OPpip1<-function(g, lF)
       {g1g2[[1]]} 
     OPpip2<-function(g, lF)
       {lF$MutateGene(g1g2[[2]], lF)} 
-   list(lF$EvalGene(lF$Accept(OPpip1, gene, lF), lF), 
-   lF$EvalGene(lF$Accept(OPpip2, gene, lF), lF)) 
+   list(lF$EvalGene(lF$Accept(OPpip1, g, lF), lF), 
+   lF$EvalGene(lF$Accept(OPpip2, g, lF), lF)) 
      }
-# force
-a<-gene
-a<-gene1
+  rlang::env_unbind(environment(Pipeline), c("lF")) 
 return(Pipeline)
 }

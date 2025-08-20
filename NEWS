@@ -38,3 +38,13 @@ Version 1.0.0.4 (2025-07-25)
   operator pipelines (2 kids). This shifts execution of the 
   genetic mechanism to the evaluation phase.
 
+Version 1.0.0.5 (2025-08-20)
+
+- Remove objects not needed from captured environment in the following 
+  functions:
+  newPipeline(), newCrossPipeline(), newMutPipeline(), newCrossMutPipeline()
+  newCross2Mut1Pipeline(), newCross2Mut2Pipeline(), newCrossMut2Pipeline(),
+  newCross2Pipeline() 
+
+
+
