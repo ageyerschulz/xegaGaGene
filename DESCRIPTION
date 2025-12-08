@@ -20,6 +20,8 @@ Description: Representation-dependent gene level operations of a
         Spears, W. and De Jong, K. (1991, ISBN:1-55860-208-9).
         For mutation operators, see 
         Stanhope, S. A. and Daida, J. M. (1996, ISBN:0-18-201-031-7).
+        For xega's architecture,
+        see Geyer-Schulz, A. (2025) <doi:10.5445/IR/1000187255>.
 License: MIT + file LICENSE
 URL: https://github.com/ageyerschulz/xegaGaGene
 Encoding: UTF-8
