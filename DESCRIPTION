@@ -1,6 +1,6 @@
 Package: xegaGaGene 
 Title: Binary Gene Operations for Genetic Algorithms 
-Version: 1.0.0.5
+Version: 1.0.0.6
 Authors@R: 
     person(given = "Andreas",
            family = "Geyer-Schulz",
@@ -24,7 +24,7 @@ License: MIT + file LICENSE
 URL: https://github.com/ageyerschulz/xegaGaGene
 Encoding: UTF-8
 LazyData: false
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Suggests: testthat (>= 3.0.0)
 Imports:
         rlang,

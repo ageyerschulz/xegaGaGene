@@ -36,13 +36,13 @@
 #' @export
 xegaGaCross2Gene<-function(gg1, gg2, lF)
 {
-    g1<-gg1$gene1; g2<-gg2$gene1
-    cut<-sample(1:max(1,(length(g1)-1)), 1)
+    l<-length(gg1$gene1)
+    cut<-sample(1:max(1, l-1), 1)
     ng1<-gg1; ng2<-gg2
-    ng1$gene1<-c(head(g1,cut), tail(g2, length(g2)-cut))
+    ng1$gene1<-c(utils::head(gg1$gene1,cut), utils::tail(gg2$gene1, l-cut))
     # Tests on equality?
     ng1$evaluated<-FALSE
-    ng2$gene1<-c(head(g2,cut), tail(g1, length(g2)-cut))
+    ng2$gene1<-c(utils::head(gg2$gene1,cut), utils::tail(gg1$gene1, l-cut))
     # Tests on equality?
     ng2$evaluated<-FALSE
     return(list(ng1, ng2))
@@ -167,7 +167,7 @@ xegaGaCrossGene<-function(gg1, gg2, lF)
     g1<-gg1$gene1; g2<-gg2$gene1
     cut<-sample(1:max(1,(length(g1)-1)), 1)
     ng<-gg1
-    ng$gene1<-c(head(g1,cut), tail(g2, length(g2)-cut))
+    ng$gene1<-c(utils::head(g1,cut), utils::tail(g2, length(g2)-cut))
     # Tests on equality?
     ng$evaluated<-FALSE
     return(list(ng))
