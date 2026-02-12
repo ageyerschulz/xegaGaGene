@@ -49,7 +49,7 @@ Version 1.0.0.5 (2025-08-20)
 Version 1.0.0.6 (2025-12-04)
 
 - Add version of pipeline compilation without closures:
-  newPipelineG(), newCrossPipelineiG(), newMutPipelineG(), 
+  newPipelineG(), newCrossPipelineG(), newMutPipelineG(), 
   newCrossMutPipelineG(), newCross2Mut1PipelineG(), 
   newCross2Mut2PipelineG(), newCrossMut2PipelineG(),
   newCross2PipelineG() 
