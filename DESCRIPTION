@@ -8,7 +8,8 @@ Authors@R:
            email = "Andreas.Geyer-Schulz@kit.edu",
           comment = c(ORCID = "0009-0000-5237-3579"))
 Description: Representation-dependent gene level operations of a 
-        genetic algorithm with binary coded genes:
+        genetic algorithm with binary coded genes
+        for the R-package xega <https://CRAN.R-project.org/package=xega>:
         Initialization of random binary genes, several gene maps for 
         binary genes, several mutation operators, several crossover
         operators with 1 and 2 kids, replication 
