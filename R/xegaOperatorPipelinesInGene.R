@@ -332,9 +332,9 @@ g$Pipeline<-function(g, lF)
 {   g1g2<-lF$CrossGene(g, g$gmate, lF)
     OPpip1<-function(g1g2, lF) {g1g2[[1]]} 
     OPpip2<-function(g1g2, lF) {lF$MutateGene(g1g2[[2]], lF)} 
-   ng1<-lF$EvalGene(lF$Accept(OPpip1, g, lF), lF)
+   ng1<-lF$EvalGene(lF$Accept(OPpip1, g1g2, lF), lF)
    ng1$gmate<-NULL; ng1$Pipeline<-NULL
-   ng2<-lF$EvalGene(lF$Accept(OPpip2, g, lF), lF) 
+   ng2<-lF$EvalGene(lF$Accept(OPpip2, g1g2, lF), lF) 
    ng2$gmate<-NULL; ng2$Pipeline<-NULL
    return(list(ng1, ng2))}
 environment(g$Pipeline)<-globalenv()

@@ -1,6 +1,6 @@
 Package: xegaGaGene 
 Title: Binary Gene Operations for Genetic Algorithms 
-Version: 1.0.0.6
+Version: 1.0.0.7
 Authors@R: 
     person(given = "Andreas",
            family = "Geyer-Schulz",
@@ -9,7 +9,7 @@ Authors@R:
           comment = c(ORCID = "0009-0000-5237-3579"))
 Description: Representation-dependent gene level operations of a 
         genetic algorithm with binary coded genes
-        for the R-package xega <https://CRAN.R-project.org/package=xega>:
+        for the R-package 'xega' <https://CRAN.R-project.org/package=xega>:
         Initialization of random binary genes, several gene maps for 
         binary genes, several mutation operators, several crossover
         operators with 1 and 2 kids, replication 
@@ -21,7 +21,7 @@ Description: Representation-dependent gene level operations of a
         Spears, W. and De Jong, K. (1991, ISBN:1-55860-208-9).
         For mutation operators, see 
         Stanhope, S. A. and Daida, J. M. (1996, ISBN:0-18-201-031-7).
-        For xega's architecture,
+        For 'xega''s architecture,
         see Geyer-Schulz, A. (2025) <doi:10.5445/IR/1000187255>.
 License: MIT + file LICENSE
 URL: https://github.com/ageyerschulz/xegaGaGene
