@@ -58,3 +58,7 @@ Version 1.0.0.7 (2026-08-05)
 
 - Bug fix: Arguments in newCross2Mut2PipelineG() corrected. 
 
+Version 1.0.0.8 (2026-11-25)
+
+- Acceptance rule added to function xegaGaReplicate2Gene() 
+

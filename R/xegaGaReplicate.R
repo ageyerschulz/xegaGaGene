@@ -62,14 +62,22 @@ xegaGaReplicate2Gene<- function(pop, fit, lF)
     g<-pop[[lF$SelectGene(fit, lF)]]
     mut<-runif(1)<lF$MutationRate(g$fit, lF)
     cross<-runif(1)<lF$CrossRate(g$fit, lF)
+    OPpip<-function(g, lF) {g}
      
    if (cross && mut) 
-    { return(lapply(lF$CrossGene(g, pop[[lF$SelectMate(fit, lF)]], lF), 
-	       lF$MutateGene, lF=lF))}
+    { g1g2<-lF$CrossGene(g, pop[[lF$SelectMate(fit, lF)]], lF)
+      OPpip1<-function(g, lF) { lF$MutateGene(g1g2[[1]], lF)} 
+      OPpip2<-function(g, lF) { lF$MutateGene(g1g2[[2]], lF)} 
+      return(list(lF$Accept(OPpip1, g, lF), lF$Accept(OPpip2, g, lF)))}
+
   if ((cross) && (!mut)) { 
-    return(lF$CrossGene(g, pop[[lF$SelectMate(fit, lF)]], lF)) }
-  if ((!cross) && (mut)) { return(list(lF$MutateGene(g, lF))) }
-  return(list(g))
+    g1g2<-lF$CrossGene(g, pop[[lF$SelectMate(fit, lF)]], lF)
+    return(list(lF$Accept(OPpip, g1g2[[1]], lF), 
+                lF$Accept(OPpip, g1g2[[2]], lF)))}
+
+  if ((!cross) && (mut)) 
+    {OPpip<-function(g, lF) { lF$MutateGene(g, lF)}}
+  return(list(lF$Accept(OPpip, g, lF)))
 }
 
 #' Replicates a gene with a crossover operator with 2 kids by generating a list of function closures.
